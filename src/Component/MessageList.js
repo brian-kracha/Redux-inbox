@@ -1,12 +1,7 @@
 import React from 'react'
 import { connect } from "react-redux"
 import { bindActionCreators } from 'redux'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom'
+
 import Message from './Message'
 const MessageList = ({messages}) => {
   console.log(messages)

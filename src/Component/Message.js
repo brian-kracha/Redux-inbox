@@ -7,44 +7,47 @@ import {
   Link,
   Switch
 } from 'react-router-dom'
-import {isStarred} from '../Actions'
-class Message extends Component {
-  constructor(props){
-  super(props)
-}
-  render(){
-    let star ='star fa fa-star-o'
-    if(this.props.message.starred === true){
-      star ='star fa fa-star'
-    }
-    console.log(this.props)
-      return(
-        <div className="row message read selected">
+import {isStarred, selectedMessage} from '../Actions'
+const Message= ({message,isStarred, selectedMessage,selected})=> {
+  if(message.selected===true){
+
+    selected = "selected"
+  }
+  let star ='star fa fa-star-o'
+  if(message.starred === true){
+    star ='star fa fa-star'
+  }
+
+  const selectedClass = selected ? 'selected' : ""
+
+return(
+
+
+        <div className={`row message read ${selectedClass}`}>
           <div className="col-xs-1">
             <div className="row">
-              <div className="col-xs-2">
-                <input type="checkbox" checked="checked" />
+              <div className="col-xs-2" onClick={()=>{selectedMessage(message)}}>
+                <input type="checkbox" checked={`${selected}`} />
               </div>
-              <div className="col-xs-2" onClick={()=>{isStarred(this.props.message)}}>
+              <div className="col-xs-2" onClick={()=>{isStarred(message)}}>
                 <i className={`${star}`}></i>
               </div>
             </div>
           </div>
           <div className="col-xs-11">
             <a href="#">
-              {this.props.message.subject}
+              {message.subject}
             </a>
           </div>
         </div>
-    )
-  }
-}
+
+  )}
 const mapStateToProps = state => ({
   messages: state.messageReducer.messages
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  isStarred:{isStarred}
+  isStarred:isStarred ,selectedMessage:selectedMessage
 }, dispatch)
 export default connect(
   mapStateToProps,
